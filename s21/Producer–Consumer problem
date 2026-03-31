@@ -1,0 +1,71 @@
+class Shared {
+    private int value;
+    private boolean available = false;
+
+    synchronized void produce(int val) {
+        while (available) {
+            try {
+                wait();
+            } catch (Exception e) {}
+        }
+
+        value = val;
+        System.out.println("Produced: " + value);
+        available = true;
+        notify();
+    }
+
+    synchronized void consume() {
+        while (!available) {
+            try {
+                wait();
+            } catch (Exception e) {}
+        }
+
+        System.out.println("Consumed: " + value);
+        available = false;
+        notify();
+    }
+}
+
+class Producer extends Thread {
+    Shared s;
+
+    Producer(Shared s) {
+        this.s = s;
+    }
+
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            s.produce(i);
+        }
+    }
+}
+
+class Consumer extends Thread {
+    Shared s;
+
+    Consumer(Shared s) {
+        this.s = s;
+    }
+
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            s.consume();
+        }
+    }
+}
+
+public class ProducerConsumerDemo {
+    public static void main(String[] args) {
+        Shared s = new Shared();
+
+        Producer p = new Producer(s);
+        Consumer c = new Consumer(s);
+
+        p.start();
+        c.start();
+    }
+}
+
+
