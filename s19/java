@@ -1,0 +1,27 @@
+import java.util.*;
+
+public class NegativeNumbers {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        LinkedList<Integer> list = new LinkedList<>();
+
+        System.out.print("Enter number of elements (N): ");
+        int n = sc.nextInt();
+
+        System.out.println("Enter " + n + " integers:");
+
+        for (int i = 0; i < n; i++) {
+            int num = sc.nextInt();
+            list.add(num);
+        }
+
+        System.out.println("Negative integers are:");
+
+        for (int num : list) {
+            if (num < 0) {
+                System.out.println(num);
+            }
+        }
+    }
+}
