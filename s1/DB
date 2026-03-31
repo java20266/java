@@ -1,0 +1,112 @@
+CREATE DATABASE company;
+
+USE company;
+
+CREATE TABLE employee (
+    eno INT PRIMARY KEY,
+    ename VARCHAR(50),
+    designation VARCHAR(50),
+    salary DOUBLE
+);
+
+
+
+
+import javax.swing.*;
+import java.awt.event.*;
+import java.sql.*;
+
+public class EmployeeForm extends JFrame implements ActionListener {
+
+    JTextField t1, t2, t3, t4;
+    JButton btnSave;
+
+    public EmployeeForm() {
+        setTitle("Employee Form");
+        setSize(300, 300);
+        setLayout(null);
+
+        JLabel l1 = new JLabel("Emp No:");
+        l1.setBounds(30, 30, 100, 20);
+        add(l1);
+
+        t1 = new JTextField();
+        t1.setBounds(120, 30, 120, 20);
+        add(t1);
+
+        JLabel l2 = new JLabel("Name:");
+        l2.setBounds(30, 70, 100, 20);
+        add(l2);
+
+        t2 = new JTextField();
+        t2.setBounds(120, 70, 120, 20);
+        add(t2);
+
+        JLabel l3 = new JLabel("Designation:");
+        l3.setBounds(30, 110, 100, 20);
+        add(l3);
+
+        t3 = new JTextField();
+        t3.setBounds(120, 110, 120, 20);
+        add(t3);
+
+        JLabel l4 = new JLabel("Salary:");
+        l4.setBounds(30, 150, 100, 20);
+        add(l4);
+
+        t4 = new JTextField();
+        t4.setBounds(120, 150, 120, 20);
+        add(t4);
+
+        btnSave = new JButton("Save");
+        btnSave.setBounds(90, 200, 100, 30);
+        add(btnSave);
+
+        btnSave.addActionListener(this);
+
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        try {
+            int eno = Integer.parseInt(t1.getText());
+            String ename = t2.getText();
+            String desig = t3.getText();
+            double salary = Double.parseDouble(t4.getText());
+
+            
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/company", "root", "root");
+
+            
+            PreparedStatement ps = con.prepareStatement(
+                "INSERT INTO employee VALUES (?, ?, ?, ?)");
+
+            ps.setInt(1, eno);
+            ps.setString(2, ename);
+            ps.setString(3, desig);
+            ps.setDouble(4, salary);
+
+            int i = ps.executeUpdate();
+
+            if (i > 0) {
+                JOptionPane.showMessageDialog(this, "Record Saved!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error!");
+            }
+
+            con.close();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+        }
+    }
+
+    public static void main(String[] args) {
+        new EmployeeForm();
+    }
+}
