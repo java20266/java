@@ -1,0 +1,38 @@
+<%@ page import="java.util.*" %>
+<html>
+<head>
+    <title>Prime Number Check</title>
+</head>
+<body>
+
+<h2 align="center">Prime Number Check</h2>
+
+<%
+    int num = 7; // You can change the number
+    boolean isPrime = true;
+
+    if (num <= 1) {
+        isPrime = false;
+    } else {
+        for (int i = 2; i <= num / 2; i++) {
+            if (num % i == 0) {
+                isPrime = false;
+                break;
+            }
+        }
+    }
+
+    String result;
+    if (isPrime) {
+        result = num + " is a Prime Number";
+    } else {
+        result = num + " is NOT a Prime Number";
+    }
+%>
+
+<h3 style="color:red;" align="center">
+    <%= result %>
+</h3>
+
+</body>
+</html>
