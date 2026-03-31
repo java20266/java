@@ -1,0 +1,39 @@
+import java.util.Random;
+
+class MyThread extends Thread {
+    Random r = new Random();
+    MyThread(String name) {
+        super(name);
+        System.out.println("Thread Created: " + name);
+    }
+
+    public void run() {
+        try {
+            int sleepTime = r.nextInt(5000);
+
+            System.out.println("Thread " + getName() + " will sleep for " + sleepTime + " ms");
+
+            Thread.sleep(sleepTime);
+
+            System.out.println("Thread " + getName() + " is awake and finishing work");
+
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+
+        System.out.println("Thread " + getName() + " is Dead");
+    }
+}
+
+public class ThreadLifeCycleDemo {
+    public static void main(String[] args) {
+
+        MyThread t1 = new MyThread("Thread-1");
+        MyThread t2 = new MyThread("Thread-2");
+        MyThread t3 = new MyThread("Thread-3");
+
+        t1.start();
+        t2.start();
+        t3.start();
+    }
+}
