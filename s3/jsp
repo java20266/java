@@ -1,0 +1,38 @@
+<%@ page import="java.util.*" %>
+<html>
+<head>
+    <title>Patient Details</title>
+</head>
+<body>
+
+<h2 align="center">Patient Details</h2>
+
+<%
+    // Sample Patient Data
+    int pno = 101;
+    String pname = "Rahul Sharma";
+    String address = "Mumbai";
+    int age = 25;
+    String disease = "Fever";
+%>
+
+<table border="1" align="center" cellpadding="10">
+    <tr>
+        <th>PNo</th>
+        <th>PName</th>
+        <th>Address</th>
+        <th>Age</th>
+        <th>Disease</th>
+    </tr>
+
+    <tr>
+        <td><%= pno %></td>
+        <td><%= pname %></td>
+        <td><%= address %></td>
+        <td><%= age %></td>
+        <td><%= disease %></td>
+    </tr>
+</table>
+
+</body>
+</html>
