@@ -1,0 +1,55 @@
+import java.io.*;
+import java.util.*;
+
+class FileSearchThread extends Thread {
+    private File file;
+    private String searchText;
+
+    public FileSearchThread(File file, String searchText) {
+        this.file = file;
+        this.searchText = searchText;
+    }
+
+    public void run() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            int lineNo = 0;
+
+            while ((line = br.readLine()) != null) {
+                lineNo++;
+
+                if (line.contains(searchText)) {
+                    System.out.println("Found in File: " + file.getName() +
+                            " at Line: " + lineNo);
+                }
+            }
+
+            br.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
+
+public class SearchEngine {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter string to search: ");
+        String text = sc.nextLine();
+
+        File dir = new File(".");
+
+        File[] files = dir.listFiles();
+
+        for (File f : files) {
+            if (f.isFile() && f.getName().endsWith(".txt")) {
+                FileSearchThread t = new FileSearchThread(f, text);
+                t.start();
+            }
+        }
+
+        sc.close();
+    }
+}
