@@ -1,0 +1,10 @@
+CREATE DATABASE company;
+
+USE company;
+
+CREATE TABLE PROJECT (
+    project_id INT PRIMARY KEY,
+    project_name VARCHAR(50),
+    project_description VARCHAR(100),
+    project_status VARCHAR(20)
+);
