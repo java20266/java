@@ -1,0 +1,15 @@
+CREATE DATABASE company;
+
+USE company;
+
+CREATE TABLE customer (
+    cno INT PRIMARY KEY,
+    cname VARCHAR(50),
+    address VARCHAR(50),
+    city VARCHAR(50)
+);
+
+INSERT INTO customer VALUES
+(1,'Rahul','Pune','Pune'),
+(2,'Amit','Mumbai','Mumbai'),
+(3,'Sneha','Nashik','Nashik');
