@@ -1,0 +1,6 @@
+CREATE TABLE DONAR (
+    DNo INT,
+    DName VARCHAR(50),
+    BloodGroup VARCHAR(5),
+    Age INT
+);
