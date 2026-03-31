@@ -1,0 +1,64 @@
+import java.sql.*;
+import java.util.Scanner;
+
+public class TeacherJDBC {
+    public static void main(String[] args) {
+
+        try {
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/test", "root", "root");
+
+            Statement st = con.createStatement();
+
+            st.executeUpdate("CREATE TABLE IF NOT EXISTS Teacher(" +
+                    "TNo INT PRIMARY KEY, TName VARCHAR(50), Subject VARCHAR(50))");
+
+            String insertQuery = "INSERT INTO Teacher VALUES (?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(insertQuery);
+
+            ps.setInt(1, 1);
+            ps.setString(2, "Amit");
+            ps.setString(3, "JAVA");
+            ps.executeUpdate();
+
+            ps.setInt(1, 2);
+            ps.setString(2, "Neha");
+            ps.setString(3, "Python");
+            ps.executeUpdate();
+
+            ps.setInt(1, 3);
+            ps.setString(2, "Rahul");
+            ps.setString(3, "JAVA");
+            ps.executeUpdate();
+
+            ps.setInt(1, 4);
+            ps.setString(2, "Priya");
+            ps.setString(3, "C++");
+            ps.executeUpdate();
+
+            ps.setInt(1, 5);
+            ps.setString(2, "Suresh");
+            ps.setString(3, "JAVA");
+            ps.executeUpdate();
+
+            String selectQuery = "SELECT * FROM Teacher WHERE Subject = ?";
+            PreparedStatement ps2 = con.prepareStatement(selectQuery);
+
+            ps2.setString(1, "JAVA");
+            ResultSet rs = ps2.executeQuery();
+
+            System.out.println("Teachers teaching JAVA:");
+
+            while (rs.next()) {
+                System.out.println(rs.getInt("TNo") + " "
+                        + rs.getString("TName") + " "
+                        + rs.getString("Subject"));
+            }
+
+            con.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
