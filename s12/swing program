@@ -1,0 +1,67 @@
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.sql.*;
+
+public class ProjectSwing extends JFrame {
+
+    JTable table;
+    DefaultTableModel model;
+
+    public ProjectSwing() {
+        setTitle("Project Details");
+        setSize(600, 300);
+
+        model = new DefaultTableModel();
+        table = new JTable(model);
+
+        model.addColumn("Project ID");
+        model.addColumn("Project Name");
+        model.addColumn("Description");
+        model.addColumn("Status");
+
+        add(new JScrollPane(table), BorderLayout.CENTER);
+
+        fetchData();
+
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void fetchData() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/company", "root", "root");
+
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS PROJECT (" +
+                    "project_id INT PRIMARY KEY, " +
+                    "project_name VARCHAR(50), " +
+                    "project_description VARCHAR(100), " +
+                    "project_status VARCHAR(20))");
+            stmt.executeUpdate("INSERT INTO PROJECT VALUES (1,'Website','E-commerce site','Completed')");
+            stmt.executeUpdate("INSERT INTO PROJECT VALUES (2,'App','Android App','In Progress')");
+            stmt.executeUpdate("INSERT INTO PROJECT VALUES (3,'ERP','Management System','Pending')");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM PROJECT");
+
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4)
+                });
+            }
+
+            con.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+    }
+
+    public static void main(String[] args) {
+        new ProjectSwing();
+    }
+}
