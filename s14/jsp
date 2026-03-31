@@ -1,0 +1,28 @@
+<%@ page import="java.util.*" %>
+<html>
+<head>
+    <title>Sum of First and Last Digit</title>
+</head>
+<body>
+
+<h2 align="center">Sum of First and Last Digit</h2>
+
+<%
+    int num = 12345; // You can change the number
+
+    int lastDigit = num % 10;
+
+    int firstDigit = num;
+    while (firstDigit >= 10) {
+        firstDigit = firstDigit / 10;
+    }
+
+    int sum = firstDigit + lastDigit;
+%>
+
+<h3 align="center" style="color:red; font-size:18px;">
+    Sum of first and last digit of <%= num %> is: <%= sum %>
+</h3>
+
+</body>
+</html>
