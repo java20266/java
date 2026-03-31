@@ -1,0 +1,11 @@
+<html>
+<body>
+<form action="student" method="post">
+    Seat No: <input type="text" name="seatno"><br>
+    Name: <input type="text" name="name"><br>
+    Class: <input type="text" name="class"><br>
+    Total Marks: <input type="text" name="marks"><br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
