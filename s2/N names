@@ -1,0 +1,28 @@
+import java.util.*;
+
+public class FriendNames {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+      
+        System.out.print("Enter number of friends: ");
+        int n = sc.nextInt();
+        sc.nextLine(); // consume newline
+
+        HashSet<String> friends = new HashSet<>();
+        System.out.println("Enter friend names:");
+        for (int i = 0; i < n; i++) {
+            String name = sc.nextLine();
+            friends.add(name);
+        }
+
+        TreeSet<String> sortedFriends = new TreeSet<>(friends);
+
+        System.out.println("\nNames in ascending order:");
+        for (String name : sortedFriends) {
+            System.out.println(name);
+        }
+
+        sc.close();
+    }
+}
