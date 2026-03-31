@@ -1,0 +1,45 @@
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class VisitCounterServlet extends HttpServlet {
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        int visitCount = 0;
+        boolean newVisitor = true;
+
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("visitCount")) {
+                    visitCount = Integer.parseInt(c.getValue());
+                    visitCount++;
+                    newVisitor = false;
+                    c.setValue(String.valueOf(visitCount));
+                    response.addCookie(c);
+                }
+            }
+        }
+
+        if (newVisitor) {
+            visitCount = 1;
+            Cookie c = new Cookie("visitCount", String.valueOf(visitCount));
+            c.setMaxAge(60 * 60 * 24);
+            response.addCookie(c);
+        }
+
+        out.println("<html><body>");
+        if (newVisitor) {
+            out.println("<h2>Welcome! This is your first visit.</h2>");
+        } else {
+            out.println("<h2>You have visited this page " + visitCount + " times.</h2>");
+        }
+        out.println("</body></html>");
+    }
+}
